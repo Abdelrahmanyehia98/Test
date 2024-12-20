@@ -9,9 +9,9 @@ const router = express.Router();
 // Register User
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, repassword, phoneNumber } = req.body;
+    const { name, email, password, repassword, phoneNumber, role } = req.body;
     
-    if (!name || !email || !password || !repassword || !phoneNumber) {
+    if (!name || !email || !password || !repassword || !phoneNumber || !role) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     if (password !== repassword) {
@@ -32,7 +32,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Email already in use' });
     }
 
-    const user = new User({ name, email, password, phoneNumber });
+    const user = new User({ name, email, password, phoneNumber,role });
     await user.save();
 
     res.status(201).json({ message: 'User registered successfully' });
