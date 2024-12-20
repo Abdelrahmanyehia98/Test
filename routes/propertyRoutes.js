@@ -18,7 +18,10 @@ router.post('/Properties', authMiddleware, async (req, res) => {
       area: req.body.area,
       price: req.body.price,
       negotiationable: req.body.negotiationable,
-      createdBy: req.user.userId, 
+      createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      }, 
     });
 
     const savedProperty = await property.save();
