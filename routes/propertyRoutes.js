@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Create Property (Users Only)
+// Create Property
 router.post('/Properties', authMiddleware, async (req, res) => {
   try {
     const property = new Property({
@@ -57,7 +57,7 @@ router.delete('/Properties/:id', authMiddleware, async (req, res) => {
 
 router.get('/Properties/:id',async (req,res) =>{
   try {
-    const propertiesId = await Property.findById(req.params.id);
+    const propertiesId = await Property.findById(req.params.id).populate('createdBy', 'name email role');
     res.json(propertiesId);
   } catch (err) {
     res.status(500).json({ error: 'An error occurred while fetching properties' });
