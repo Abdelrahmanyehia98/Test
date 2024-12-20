@@ -12,8 +12,17 @@ router.post('/Properties', authMiddleware, async (req, res) => {
     }
 
     const property = new Property({
-      ...req.body,
-      createdBy: req.user.userId,
+      images: req.body.images,
+      title: req.body.title,
+      location: req.body.location,
+      description: req.body.description,
+      property: req.body.property,
+      type: req.body.type,
+      bedroom: req.body.bedroom,
+      area: req.body.area,
+      price: req.body.price,
+      negotiationable: req.body.negotiationable,
+      createdBy: req.user.userId, 
     });
 
     const savedProperty = await property.save();

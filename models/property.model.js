@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const PropertySchema = new mongoose.Schema({
-  images: {  type: [String],required: true,},
+  images: {  type: [String],required: true},
   title: { type: String, required: true, trim: true },
   location: { type: String, required: true, trim: true },
   description: { type: String, required: true, trim: true },
