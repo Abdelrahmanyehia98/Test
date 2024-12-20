@@ -7,10 +7,6 @@ const router = express.Router();
 // Create Property (Users Only)
 router.post('/Properties', authMiddleware, async (req, res) => {
   try {
-    if (req.user.role !== 'user') {
-      return res.status(403).json({ error: 'Only users can create properties' });
-    }
-
     const property = new Property({
       images: req.body.images,
       title: req.body.title,
@@ -58,5 +54,14 @@ router.delete('/Properties/:id', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'An error occurred while deleting property' });
   }
 });
+
+router.get('/Properties/:id',async (req,res) =>{
+  try {
+    const propertiesId = await Property.findById(req.params.id);
+    res.json(propertiesId);
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred while fetching properties' });
+  } 
+ });
 
 module.exports = router;
