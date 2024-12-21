@@ -18,15 +18,13 @@ router.post('/Properties', authMiddleware, async (req, res) => {
       area: req.body.area,
       price: req.body.price,
       negotiationable: req.body.negotiationable,
-      createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      }, 
+      createdBy: req.user.userId, 
     });
 
     const savedProperty = await property.save();
     res.status(201).json(savedProperty);
   } catch (err) {
+    console.error(err); // Log the error for debugging
     res.status(400).json({ error: 'An error occurred while creating property' });
   }
 });
@@ -60,7 +58,7 @@ router.delete('/Properties/:id', authMiddleware, async (req, res) => {
 
 router.get('/Properties/:id',async (req,res) =>{
   try {
-    const propertiesId = await Property.findById(req.params.id).populate('createdBy', 'name email role');
+    const propertiesId = await Property.findById(req.params.id).populate('createdBy', 'name email role phoneNumber');
     res.json(propertiesId);
   } catch (err) {
     res.status(500).json({ error: 'An error occurred while fetching properties' });
